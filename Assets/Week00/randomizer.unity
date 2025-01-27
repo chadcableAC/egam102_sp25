@@ -173,6 +173,8 @@ MonoBehaviour:
     isPresent: 1
   - student: Max Wang
     isPresent: 1
+  - student: Sean Ye
+    isPresent: 1
   isPlaytesting: 0
 --- !u!4 &1513763244
 Transform:
