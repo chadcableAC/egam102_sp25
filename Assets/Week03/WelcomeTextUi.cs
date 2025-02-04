@@ -15,6 +15,7 @@ public class WelcomeTextUi : MonoBehaviour
 
     public void ChooseWelcomeText()
     {
+        // Pick a random string to show
         int randomIndex = Random.Range(0, welcomeStrings.Count);
         string randomString = welcomeStrings[randomIndex];
         welcomeText.text = randomString;

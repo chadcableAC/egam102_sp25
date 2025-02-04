@@ -8,9 +8,11 @@ public class SimpleEnemy : MonoBehaviour
 
     void Update()
     {
+        // Destroy ourselves after the timer hits zero
         timeToDestroy -= Time.deltaTime;
         if (timeToDestroy < 0)
         {
+            // Remember - destroy the GAMEOBJECT to delete the object
             Destroy(gameObject);
         }
     }
