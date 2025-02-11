@@ -6,6 +6,7 @@ public class StateMachineEnemy : MonoBehaviour
 {
     public States state;
 
+    // An enum gives ints a fancy, readable name
     public enum States
     {
         Idle,       // 0
@@ -14,8 +15,12 @@ public class StateMachineEnemy : MonoBehaviour
         Patrol      // 3
     }
 
+    float stateTimer = 0;
+
+    // How fast to move
     public float moveSpeed = 1;
 
+    // The "player" object
     public Transform playerTransform;
 
     public SpriteRenderer myRenderer = null;
@@ -23,23 +28,24 @@ public class StateMachineEnemy : MonoBehaviour
     public Color defaultColor;
     public Color idleColor;
 
+    // Patrol variables
     public Transform[] patrolTransforms;
     public int patrolIndex;
     public float minimumPatrolPointDistance = 0.1f;
-
     public float minimumPatrolPlayerDistance = 2f;
-
-    float stateTimer = 0;
 
     void Start()
     {
+        // Make sure to set the starting state
         SetState(state);     
     }
 
     void Update()
     {
+        // Increase the timer
         stateTimer += Time.deltaTime;
 
+        // "Forward" the update to the current state
         switch (state)
         {
             case States.Idle:
@@ -62,10 +68,13 @@ public class StateMachineEnemy : MonoBehaviour
 
     void SetState(States newState)
     {
+        // Set the state
         state = newState;
 
+        // Reset the timer
         stateTimer = 0;
 
+        // Update the color based on the new state
         myRenderer.color = defaultColor;
         switch (state)
         {
@@ -86,6 +95,7 @@ public class StateMachineEnemy : MonoBehaviour
 
     private void UpdateChase()
     {
+        // Get positions
         Vector3 targetPosition = playerTransform.position;
         Vector3 ourPosition = transform.position;
 
@@ -93,14 +103,13 @@ public class StateMachineEnemy : MonoBehaviour
         Vector3 toPlayerDelta = targetPosition - ourPosition;
         Vector3 toPlayerDirection = toPlayerDelta.normalized;
 
+        // Remember to use deltaTime when moving things in Update
         transform.position += toPlayerDirection * moveSpeed * Time.deltaTime;
-
-        // If the player gets a powerup, switch to run away!
-
     }
 
     private void UpdateRunAway()
     {
+        // Get positions
         Vector3 targetPosition = playerTransform.position;
         Vector3 ourPosition = transform.position;
 
@@ -108,6 +117,7 @@ public class StateMachineEnemy : MonoBehaviour
         Vector3 toPlayerDelta = targetPosition - ourPosition;
         Vector3 toPlayerDirection = toPlayerDelta.normalized;
 
+        // Remember to use deltaTime when moving things in Update
         transform.position -= toPlayerDirection * moveSpeed * Time.deltaTime;
 
         // If we've been running away fro 5 seconds, take a break (go to idle)
@@ -119,6 +129,7 @@ public class StateMachineEnemy : MonoBehaviour
 
     private void UpdatePatrol()
     {
+        // Get positions
         Vector3 targetPosition = patrolTransforms[patrolIndex].position;
         Vector3 ourPosition = transform.position;
 
@@ -126,6 +137,7 @@ public class StateMachineEnemy : MonoBehaviour
         Vector3 toPatrolDelta = targetPosition - ourPosition;
         Vector3 toPatrolDirection = toPatrolDelta.normalized;
 
+        // Remember to use deltaTime when moving things in Update
         transform.position += toPatrolDirection * moveSpeed * Time.deltaTime;
 
         // Check to see if we're close enough to the goal
@@ -144,9 +156,7 @@ public class StateMachineEnemy : MonoBehaviour
 
         // See if we're close enough to the player
         Vector3 playerPosition = playerTransform.position;
-
         Vector3 toPlayerDelta = playerPosition - ourPosition;
-
         float distanceToPlayerPoint = toPlayerDelta.magnitude;
         if (distanceToPlayerPoint < minimumPatrolPlayerDistance)
         {

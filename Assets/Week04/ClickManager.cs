@@ -4,20 +4,11 @@ using UnityEngine;
 
 public class ClickManager : MonoBehaviour
 {
-    public Camera cam;
-
     public float circleCastRadius = 1f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        // Lets reset all of the clickable objects first
+        // First - reset all objects to normal
         ClickableObject[] allObjects = FindObjectsOfType<ClickableObject>();
         foreach (ClickableObject clickable in allObjects)
         {
@@ -31,12 +22,12 @@ public class ClickManager : MonoBehaviour
         // Turn the screen position into a world position
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
 
-        // Figure out what's overlapping with this position
+        // What is overlapping with this position?
         //Collider2D[] allColliders = Physics2D.OverlapPointAll(worldPosition);
         Collider2D[] allColliders = Physics2D.OverlapCircleAll(worldPosition, circleCastRadius);
         foreach (Collider2D collider in allColliders)
         {
-            // See if this game object has this script
+            // Does this collider have a script on it?
             ClickableObject clickable = collider.transform.GetComponent<ClickableObject>();
             if (clickable != null)
             {

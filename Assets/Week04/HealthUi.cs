@@ -7,20 +7,14 @@ public class HealthUi : MonoBehaviour
 {
     public Slider hpSlider;
 
-    // Start is called before the first frame update
     void Start()
     {
         HealthPlayer hpPlayer = FindObjectOfType<HealthPlayer>();
         if (hpPlayer != null)
         {
+            // We're assuming the player's HP is set in Awake
             float healthInterp = (float) hpPlayer.currentHealth / hpPlayer.maxHealth;
             hpSlider.value = healthInterp;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
