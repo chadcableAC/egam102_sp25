@@ -11,11 +11,13 @@ public class NewClickableObject : MonoBehaviour
 
     public void Reset()
     {
+        // Return to the default color
         myRenderer.color = defaultColor;
     }
 
     public void OnHover()
     {
+        // Set to the hover color
         myRenderer.color = hoverColor;
     }
 

@@ -27,9 +27,6 @@ public class NewClickController : MonoBehaviour
         foreach (Collider2D collider in allColliders)
         {
             // Does this collider have a script on it?
-
-            NewClickableObject[] allChildrenClickables = collider.transform.GetComponentsInChildren<NewClickableObject>();
-
             NewClickableObject clickable = collider.transform.GetComponentInParent<NewClickableObject>();
             if (clickable != null)
             {

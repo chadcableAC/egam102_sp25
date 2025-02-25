@@ -13,20 +13,24 @@ public class AudioController : MonoBehaviour
 
     void Start()
     {
+        // Get the current volume
         float sfxVolume;
         mixer.GetFloat("SFXVolume", out sfxVolume);
 
+        // Set the slider to the same value
         sfxSlider.value = sfxVolume;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        mixer.SetFloat("SFXVolume", sfxSlider.value);
+        // Make the mixer match the slider value
+        float sliderValue = sfxSlider.value;
+        mixer.SetFloat("SFXVolume", sliderValue);
     }
 
     public void PlaySound()
     {
+        // Play a sound effect
         sfxSource.Play();
     }
 }

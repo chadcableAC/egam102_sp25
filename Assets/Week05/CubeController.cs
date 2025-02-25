@@ -8,6 +8,7 @@ public class CubeController : MonoBehaviour
 
     void Update()
     {
+        // Set the parameter to the spacebar press
         bool isPressed = Input.GetKey(KeyCode.Space);
         animator.SetBool("IsSquashed", isPressed);
     }
