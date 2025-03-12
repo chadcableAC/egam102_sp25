@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
+    // Object to follow
     public SimplePlayer toFollow;
 
+    // How strong should the follow be
+    // Higher numbers will follow more closely
+    // Lower numbers will follow more loosely
     public float followStrength = 1f;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
+        // Get the positions
         Vector3 currentPosition = transform.position;
         Vector3 followPosition = toFollow.transform.position;
 
+        // Use a lerp to find a poisition inbetween these two
+        // We know Time.deltaTime is a small number,
+        // so we'll find a position closer to the current position
         Vector3 smoothingPosition = Vector3.Lerp(currentPosition, followPosition, Time.deltaTime * followStrength);
 
         // Preserve the camera's current depth (or z) position
@@ -32,6 +32,7 @@ public class FollowCamera : MonoBehaviour
             smoothingPosition.y = currentPosition.y;
         }
 
+        // Finally update our position
         transform.position = smoothingPosition;
     }
 }

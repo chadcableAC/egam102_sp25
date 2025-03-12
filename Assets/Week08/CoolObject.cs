@@ -4,20 +4,17 @@ using UnityEngine;
 
 public class CoolObject : MonoBehaviour
 {
-    public GroundScript ground;
-
+    // This reference is on our prefab
     public SpriteRenderer rend;
 
+    // This reference is OUTSIDE our prefab,
+    // so we'll need to relink it
+    public GroundScript ground;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Find a reference to the ground,
+        // since we might not have it
         ground = FindObjectOfType<GroundScript>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

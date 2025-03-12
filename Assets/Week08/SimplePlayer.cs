@@ -13,6 +13,7 @@ public class SimplePlayer : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Get the left / right input
         float horizontal = 0;
         if (Input.GetKey(KeyCode.LeftArrow))
         {
@@ -23,10 +24,16 @@ public class SimplePlayer : MonoBehaviour
             horizontal = 1;
         }
 
+        // Take the current velocity
         Vector2 newVelocity = rb.velocity;
+
+        // Udpate the X to our input
         newVelocity.x = horizontal * moveStrength;
+
+        // Reassign the velocity
         rb.velocity = newVelocity;
 
+        // Listen for jumps (make sure we're grounded)
         if (Input.GetKeyDown(KeyCode.UpArrow) &&
             groundDetector.isGrounded)
         {

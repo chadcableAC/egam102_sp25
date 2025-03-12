@@ -5,37 +5,37 @@ using UnityEngine;
 public class ReflectObject : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public float speed;
 
+    // Math values
+    public float speed;
     public Vector2 currentDirection;
 
-    // Start is called before the first frame update
     void Start()
     {
+        // Set the initial direction
         currentDirection = transform.up;
     }
 
     void FixedUpdate()
     {
-        rb.velocity = currentDirection * speed;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        // Debug coloring
         Color rayColor = Color.white;
 
+        // Math values
         Vector3 direction = currentDirection;
         float rayDistance = 2;        
 
+        // Look for all hits
         RaycastHit2D[] hitInfos = Physics2D.RaycastAll(transform.position, direction, rayDistance);
         foreach (RaycastHit2D hitInfo in hitInfos)
         {
+            // Ignore ourselves
             if (hitInfo.rigidbody != rb)
             { 
-                //
+                // We hit something!
                 rayColor = Color.red;
 
+                // Find the normal, debug draw
                 Vector3 normal = hitInfo.normal;
                 Debug.DrawRay(hitInfo.point, normal, Color.yellow);
 
@@ -44,13 +44,19 @@ public class ReflectObject : MonoBehaviour
                 Vector2 n = normal.normalized;
                 Vector2 r = d - 2 * Vector2.Dot(d, n) * n;
 
+                // Debug draw this new direction
                 Debug.DrawRay(hitInfo.point, r, Color.magenta);
 
+                // Don't look at anymore collisions
                 break;
             }
         }
 
+        // Debug draw the direction
         Debug.DrawRay(transform.position, direction * rayDistance, rayColor);
+
+        // Update our velocity every frame
+        rb.velocity = currentDirection * speed;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
